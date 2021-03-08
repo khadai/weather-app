@@ -1,0 +1,25 @@
+.search-panel {
+    height: 76px;
+}
+
+.search-panel input {
+    height: inherit;
+    max-width: 750px;
+    font-size: 16px;
+    border-radius: 10px;
+    background-color: #EEEEEE;
+    border: 0px;
+}
+
+.search-panel button {
+    line-height: inherit;
+    width: 170px;
+    font-size: 21px;
+    background-color: #32C5FF;
+    font-weight: bold;
+    color: white;
+    display: table-cell;
+    vertical-align: middle;
+    border-radius: 0 10px 10px 0;
+
+}

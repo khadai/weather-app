@@ -1,0 +1,82 @@
+.weather-item {
+    border: 1px solid #EEEEEE;
+    padding-bottom: 25px;
+    padding-top: 10px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.item-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.header-location{
+    display: flex;
+    flex-direction: row;
+}
+
+.item-header {
+    margin: 10px;
+}
+
+table th, td {
+    padding: 0 20px;
+    /*border: 1px solid black*/
+}
+
+td {
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+th, .coordinates {
+    font-size: 16px;
+    font-weight: normal;
+    color: #6D7278;
+}
+
+.coordinates {
+    margin: 4px;
+}
+
+.weather-one-word {
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+}
+
+.location {
+    font-size: 21px;
+    font-weight: bold;
+    color: black;
+    margin-left: 25px;
+    margin-bottom: 0;
+}
+
+.item-header .star {
+    color: lightgray;
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+}
+
+/*.weather-item img {*/
+/*    width: 66px;*/
+/*}*/
+
+.icon-weather-container {
+    height: 66px;
+    width: 66px;
+    border-radius: 5px;
+    border: 1px solid #EEEEEE;
+    display: flex;
+    justify-content: center;
+}
+
+.temp-now {
+    text-align: start;
+}

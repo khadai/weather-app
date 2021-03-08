@@ -1,0 +1,10 @@
+.start-image{
+    margin: 100px;
+    justify-content: center;
+    display: flex;
+}
+
+.start-image img{
+    height: 225px;
+    width: 225px;
+}

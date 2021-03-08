@@ -1,0 +1,14 @@
+.weather-app {
+    margin: 2rem auto 0 auto;
+    max-width: 90%;
+}
+
+.search-content {
+    width: 40%;
+    align-content: center;
+    margin: 100px auto;
+}
+
+html {
+    font-family: 'Roboto', sans-serif;
+}

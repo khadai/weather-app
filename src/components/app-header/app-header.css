@@ -1,0 +1,25 @@
+.app-header {
+    align-items: flex-end;
+}
+
+.app-header h1 {
+    flex-grow: 0.1;
+    padding: 0 5px 5px 5px;
+    margin-right: 10px;
+    font-size: 24px;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.app-header h2 {
+    font-size: 16px;
+    color: grey;
+    padding: 10px;
+    font-family: sans-serif;
+    font-weight: lighter;
+}
+
+.app-header .pressed {
+    font-weight: bold;
+    color: black;
+}
