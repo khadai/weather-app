@@ -23,3 +23,8 @@
     font-weight: bold;
     color: black;
 }
+
+.app-header .unpressed {
+    font-weight: lighter;
+    color: black;
+}

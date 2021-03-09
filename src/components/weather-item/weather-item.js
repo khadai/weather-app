@@ -33,6 +33,7 @@ const WeatherItem = (props) => {
             });
     }, [searchCity]);
 
+
     function onStarClicked(){
         setSaved(!isSaved);
         console.log(weather);
@@ -80,7 +81,7 @@ const WeatherItem = (props) => {
                     <tr>
                         <th rowSpan="3">
                             <div className='icon-weather-container'>
-                                <img src={img} alt={icon}/>
+                                <img src={icon} alt={icon}/>
                             </div>
                         </th>
                         <th className="weather-one-word">{weatherMain}</th>

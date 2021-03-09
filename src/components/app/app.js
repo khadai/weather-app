@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {BrowserRouter as Router, Route } from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 
 import './app.css';
 import AppHeader from "../app-header";
@@ -40,22 +40,32 @@ const App = () => {
     return (
         <div className="weather-app">
             <Router>
-            <AppHeader/>
+                <AppHeader/>
+
+                <Route
+                    path="/home" render={() => (
+                    <React.Fragment>
+                        <div className="search-content">
+                            <SearchPanel onSearchChange={onSearchChange}/>
+                        </div>
+                        <WeatherItem
+                            searchCity={search}
+                            onItemSaved={(item) => onItemSaved(item)}
+                            onItemUnsaved={(item) => onItemUnsaved(item)}
+                        />
+                    </React.Fragment>
+                    )}/>
+                <Route
+                    path="/saved" render={()=>(
+                    <SavedLocationsList
+                        savedItems={savedItems}
+                        onItemSaved={(item) => onItemSaved(item)}
+                        onItemUnsaved={(item) => onItemUnsaved(item)}/>
+                )}/>
 
 
 
-            <div className="search-content">
-                <SearchPanel onSearchChange={onSearchChange}/>
-            </div>
-            <WeatherItem
-                searchCity={search}
-                onItemSaved={(item) => onItemSaved(item)}
-                onItemUnsaved={(item) => onItemUnsaved(item)}
-            />
-            <SavedLocationsList
-                savedItems={savedItems}
-                onItemSaved={(item) => onItemSaved(item)}
-                onItemUnsaved={(item) => onItemUnsaved(item)}/>
+
             </Router>
         </div>
     );
