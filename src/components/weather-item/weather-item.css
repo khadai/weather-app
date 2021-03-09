@@ -58,15 +58,23 @@ th, .coordinates {
 }
 
 .item-header .star {
-    color: lightgray;
     width: 20px;
     height: 20px;
     font-weight: bold;
 }
 
-/*.weather-item img {*/
-/*    width: 66px;*/
-/*}*/
+.unchecked {
+    color: lightgray;
+}
+
+.checked {
+    color: #F7B500;
+}
+
+.icon-weather-container img {
+    width: 60px;
+}
+
 
 .icon-weather-container {
     height: 66px;
@@ -74,7 +82,9 @@ th, .coordinates {
     border-radius: 5px;
     border: 1px solid #EEEEEE;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items :center;
 }
 
 .temp-now {

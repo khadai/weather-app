@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #c78f22;
+    color: tomato;
 }
 
 .error-indicator img {

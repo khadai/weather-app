@@ -29,7 +29,8 @@ export default class OpenWeatherService {
             lon: weatherData.coord.lon,
             lat: weatherData.coord.lat,
             weatherMain: weatherData.weather[0].main,
-            weatherDescription: weatherData.weather[0].description,
+            weatherDescription: this._capitalizeFirstLetter(
+                weatherData.weather[0].description),
             icon: weatherData.weather[0].icon,
             temp: this._kelvinToCelsium(weatherData.main.temp),
             minTemp: this._kelvinToCelsium(weatherData.main.temp_min),
@@ -38,7 +39,12 @@ export default class OpenWeatherService {
         };
     };
 
-    _kelvinToCelsium(kelvin){
+    _kelvinToCelsium(kelvin) {
         return Math.floor(kelvin - 273.15)
+    }
+
+    _capitalizeFirstLetter(str) {
+        const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
+        return capitalized;
     }
 }

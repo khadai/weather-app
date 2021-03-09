@@ -10,7 +10,7 @@ const ErrorIndicator = () => {
                 something has gone  wrong
             </span>
             <span>
-                try again later
+                check the spelling of the city name
             </span>
         </div>
     );
