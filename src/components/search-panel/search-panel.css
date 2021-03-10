@@ -13,7 +13,7 @@
 
 .search-panel button {
     line-height: inherit;
-    width: 170px;
+    max-width: 170px;
     font-size: 21px;
     background-color: #32C5FF;
     font-weight: bold;

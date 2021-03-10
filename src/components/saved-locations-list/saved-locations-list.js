@@ -6,19 +6,16 @@ import WeatherItem from "../weather-item";
 const SavedLocationsList = (props) => {
 
     const {savedItems, onItemSaved, onItemUnsaved} = props;
-    const [isSaved, setSaved] = useState(false);
-
-
+    const [isSaved, setSaved] = useState(true);
 
     const elements = savedItems.map((item) => {
-        // console.log('in saved: '+savedItems)
 
         return <div key={item}><WeatherItem
-                            searchCity={item}
-                            onItemSaved={(item) => onItemSaved(item)}
-                            onItemUnsaved={(item) => onItemUnsaved(item)}
-                            isSaved={isSaved}
-        /></div>
+            searchCity={item}
+            onItemSaved={(item) => onItemSaved(item)}
+            onItemUnsaved={(item) => onItemUnsaved(item)}
+            isItemSaved={isSaved}/>
+        </div>
     })
 
     return (

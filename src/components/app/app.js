@@ -21,7 +21,7 @@ const App = () => {
             setSaved(true)
             console.log("here")
         }
-    }, [search])
+    }, [savedItems, search])
 
     function onSearchChange(search) {
         setSearch(search)
@@ -38,12 +38,8 @@ const App = () => {
     function onItemUnsaved(city) {
         console.log('i unsaved the ' + city + '!')
         const idx = savedItems.findIndex((item) => item === city)
-        console.log(idx)
-        if (idx > -1) {
-            setItems([
-                savedItems.splice(idx, 1),
-            ]);
-        }
+        const items = [...savedItems.slice(0, idx), ...savedItems.slice(idx + 1)]
+        setItems(items);
     }
 
     console.log(savedItems)

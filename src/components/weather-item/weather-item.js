@@ -23,11 +23,20 @@ const WeatherItem = (props) => {
             .getDataByCityName(searchCity)
             .then((weather) => {
                 setWeather(weather);
+                setLoading(false);
+                setErr(false);
             })
             .catch(() => {
                 setErr(true);
+                setLoading(true);
             });
     }, [searchCity]);
+
+    useEffect(()=>{
+        if(isItemSaved){
+            setSaved(true)
+        }
+    }, [isSaved]);
 
     function onStarClicked(){
         setSaved(!isSaved);
