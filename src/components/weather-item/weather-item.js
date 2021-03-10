@@ -11,33 +11,28 @@ const WeatherItem = (props) => {
 
     const openWeatherService = new OpenWeatherService();
 
-    const {searchCity, onItemSaved, onItemUnsaved} = props;
+    const {searchCity, onItemSaved, onItemUnsaved, isItemSaved} = props;
 
     const [weather, setWeather] = useState(null);
     const [err, setErr] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [isSaved, setSaved] = useState(false);
+    const [isSaved, setSaved] = useState(isItemSaved);
 
     useEffect(() => {
         openWeatherService
             .getDataByCityName(searchCity)
             .then((weather) => {
                 setWeather(weather);
-                setLoading(false);
-                setErr(false);
-                setSaved(false);
             })
             .catch(() => {
                 setErr(true);
-                setLoading(true);
             });
     }, [searchCity]);
 
-
     function onStarClicked(){
         setSaved(!isSaved);
-        console.log(weather);
-        !isSaved ? onItemSaved(weather) : onItemUnsaved(weather.city);
+        console.log('d&'+weather);
+        !isSaved ? onItemSaved(weather.city) : onItemUnsaved(weather.city);
     }
 
     const classNames = 'star ' + (isSaved ? 'checked' : 'unchecked');

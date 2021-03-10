@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route} from "react-router-dom";
 
 import './app.css';
@@ -14,26 +14,36 @@ const App = () => {
 
     const [search, setSearch] = useState();
     const [savedItems, setItems] = useState([]);
+    const [isSaved, setSaved] = useState(false);
+
+    useEffect(() => {
+        if (savedItems.includes(search)) {
+            setSaved(true)
+            console.log("here")
+        }
+    }, [search])
 
     function onSearchChange(search) {
         setSearch(search)
     }
 
     function onItemSaved(item) {
-        setItems([...savedItems, item])
+        if (savedItems.includes(item))
+            return;
+        else
+            setItems([...savedItems, item])
         console.log('i saved the ' + item + '!')
     }
 
     function onItemUnsaved(city) {
         console.log('i unsaved the ' + city + '!')
-        const idx = savedItems.findIndex((item) => item.city === city)
-
-        const items = [
-            ...savedItems.slice(0, idx),
-            ...savedItems.slice(idx + 1)
-        ]
-
-        setItems(items);
+        const idx = savedItems.findIndex((item) => item === city)
+        console.log(idx)
+        if (idx > -1) {
+            setItems([
+                savedItems.splice(idx, 1),
+            ]);
+        }
     }
 
     console.log(savedItems)
@@ -41,9 +51,8 @@ const App = () => {
         <div className="weather-app">
             <Router>
                 <AppHeader/>
-
                 <Route
-                    path="/home" render={() => (
+                    path="/" exact render={() => (
                     <React.Fragment>
                         <div className="search-content">
                             <SearchPanel onSearchChange={onSearchChange}/>
@@ -52,18 +61,17 @@ const App = () => {
                             searchCity={search}
                             onItemSaved={(item) => onItemSaved(item)}
                             onItemUnsaved={(item) => onItemUnsaved(item)}
+                            isItemSaved={isSaved}
                         />
                     </React.Fragment>
-                    )}/>
+                )}/>
                 <Route
-                    path="/saved" render={()=>(
+                    path="/saved" render={() => (
                     <SavedLocationsList
                         savedItems={savedItems}
                         onItemSaved={(item) => onItemSaved(item)}
                         onItemUnsaved={(item) => onItemUnsaved(item)}/>
                 )}/>
-
-
 
 
             </Router>
