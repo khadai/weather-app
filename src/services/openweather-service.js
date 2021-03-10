@@ -13,8 +13,24 @@ export default class OpenWeatherService {
         return await res;
     }
 
+    getCityData = async (cityRequest) => {
+        if (Number.isInteger(cityRequest)){
+            return this.getDataByCityZip(cityRequest)
+        } else
+            return this.getDataByCityName(cityRequest)
+    }
+
     getDataByCityName = async (cityName) => {
-        const cityData = await this.getResource(`?q=${cityName}`)
+        try {
+            const cityData = await this.getResource(`?q=${cityName}`)
+            return this._transformWeatherData(cityData);
+        } catch(e) {
+            throw Error(e);
+        }
+    }
+
+    getDataByCityZip = async (zip) => {
+        const cityData = await this.getResource(`?zip=${zip}`)
         return this._transformWeatherData(cityData);
     }
 

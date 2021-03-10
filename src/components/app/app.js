@@ -9,24 +9,34 @@ import SavedLocationsList from "../saved-locations-list";
 import StartImage from "../start-image/start-image";
 import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
+import OpenWeatherService from "../../services/openweather-service";
 
 const App = () => {
-
-    const [search, setSearch] = useState();
+    const openWeatherService = new OpenWeatherService();
+    const [search, setSearch] = useState("");
     const [savedItems, setItems] = useState([]);
     const [isSaved, setSaved] = useState(false);
+    const [data, setData] = useState();
 
     useEffect(() => {
-        if (savedItems.includes(search)) {
-            setSaved(true)
-            console.log("here")
-        } else{
-            setSaved(false)
-        }
-        console.log("hereee")
-        console.log('my saved item:'+savedItems)
-        console.log('my search '+search)
-    }, [savedItems, search])
+        openWeatherService.getDataByCityName(search).then((res) => {
+            setData(res);
+        }).catch((e) => {
+            console.log(e)
+        })
+    },[search]);
+    //
+    // useEffect(() => {
+    //     if (savedItems.includes(search)) {
+    //         setSaved(true)
+    //         console.log("here")
+    //     } else{
+    //         setSaved(false)
+    //     }
+    //     console.log("hereee")
+    //     console.log('my saved item:'+savedItems)
+    //     console.log('my search '+search)
+    // }, [savedItems, search])
 
     function onSearchChange(search) {
         setSearch(search)
@@ -59,7 +69,7 @@ const App = () => {
                             <SearchPanel onSearchChange={onSearchChange}/>
                         </div>
                         <WeatherItem
-                            searchCity={search}
+                            item={data}
                             onItemSaved={(item) => onItemSaved(item)}
                             onItemUnsaved={(item) => onItemUnsaved(item)}
                             isItemSaved={isSaved}

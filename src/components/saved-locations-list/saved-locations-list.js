@@ -2,25 +2,34 @@ import React, {useEffect, useState} from 'react';
 
 import './saved-locations-list.css';
 import WeatherItem from "../weather-item";
+import OpenWeatherService from "../../services/openweather-service";
 
-const SavedLocationsList = (props) => {
+const SavedLocationsList = ({savedItems, onItemSaved, onItemUnsaved}) => {
+    const openWeatherService = new OpenWeatherService();
+    const [data, setData] = useState([]);
+    const [isSaved, setIsSaved] = useState(true);
+    console.log('in saved'+savedItems)
 
-    const {savedItems, onItemSaved, onItemUnsaved} = props;
-    const [isSaved, setSaved] = useState(true);
-
-    const elements = savedItems.map((item) => {
-
-        return <div key={item}><WeatherItem
-            searchCity={item}
-            onItemSaved={(item) => onItemSaved(item)}
-            onItemUnsaved={(item) => onItemUnsaved(item)}
-            isItemSaved={isSaved}/>
-        </div>
-    })
+    useEffect(() => {
+        savedItems.forEach((item) => {
+            openWeatherService.getDataByCityName(item).then((res) => {
+                setData((prev) => [...prev, res])
+            })
+        })
+    },[]);
 
     return (
         <div className="list-container">
-            {elements}
+            {
+                data.map((item) =>
+                    <WeatherItem
+                        key={item.city}
+                        item={item}
+                        onItemSaved={(item) => onItemSaved(item)}
+                        onItemUnsaved={(item) => onItemUnsaved(item)}
+                        isItemSaved={isSaved}
+                    />)
+            }
         </div>
     );
 };

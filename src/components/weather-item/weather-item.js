@@ -7,54 +7,17 @@ import StartImage from "../start-image";
 import ErrorIndicator from "../error-indicator";
 import Spinner from "../spinner";
 
-const WeatherItem = (props) => {
-
-    const openWeatherService = new OpenWeatherService();
-
-    const {searchCity, onItemSaved, onItemUnsaved, isItemSaved} = props;
-
-    const [weather, setWeather] = useState(null);
-    const [err, setErr] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [isSaved, setSaved] = useState(null);
-
-    useEffect(() => {
-        openWeatherService
-            .getDataByCityName(searchCity)
-            .then((weather) => {
-                setWeather(weather);
-                setLoading(false);
-                setErr(false);
-                setSaved(isItemSaved)
-            })
-            .catch(() => {
-                setErr(true);
-                setLoading(true);
-            });
-    }, [searchCity, isSaved]);
-
-    // useEffect(()=>{
-    //     if(isItemSaved){
-    //         setSaved(true)
-    //     }
-    // }, [isSaved]);
+const WeatherItem = ({item, onItemSaved, onItemUnsaved, isItemSaved, savedItems}) => {
+    const [isSaved, setSaved] = useState(false);
 
     function onStarClicked(){
         setSaved(!isSaved);
-        console.log('d&'+weather);
-        !isSaved ? onItemSaved(weather.city) : onItemUnsaved(weather.city);
+        console.log('d&'+item);
+        !isSaved ? onItemSaved(item.city.toLowerCase()) : onItemUnsaved(item.city.toLowerCase());
     }
 
-    const classNames = 'star ' + (isSaved ? 'checked' : 'unchecked');
-
-    if (!weather) {
+    if (!item) {
         return <StartImage/>
-    }
-    if (err) {
-        return <ErrorIndicator/>
-    }
-    if (loading){
-        return <Spinner/>
     }
 
     const {
@@ -69,7 +32,7 @@ const WeatherItem = (props) => {
         minTemp,
         maxTemp,
         wind
-    } = weather;
+    } = item;
 
     return (
         <div className="weather-item">
@@ -78,7 +41,7 @@ const WeatherItem = (props) => {
                     <p className="location">{city}, {country}</p>
                     <p className="coordinates">({lon}, {lat})</p>
                 </span>
-                <Star className={classNames} onClick={()=>onStarClicked()}/>
+                <Star className={`star ${isSaved ? 'checked' : 'unchecked'}`} onClick={()=>onStarClicked()}/>
             </div>
             <div className="item-body">
                 <table>
