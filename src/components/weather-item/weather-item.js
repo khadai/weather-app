@@ -16,7 +16,7 @@ const WeatherItem = (props) => {
     const [weather, setWeather] = useState(null);
     const [err, setErr] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [isSaved, setSaved] = useState(isItemSaved);
+    const [isSaved, setSaved] = useState(null);
 
     useEffect(() => {
         openWeatherService
@@ -25,18 +25,19 @@ const WeatherItem = (props) => {
                 setWeather(weather);
                 setLoading(false);
                 setErr(false);
+                setSaved(isItemSaved)
             })
             .catch(() => {
                 setErr(true);
                 setLoading(true);
             });
-    }, [searchCity]);
+    }, [searchCity, isSaved]);
 
-    useEffect(()=>{
-        if(isItemSaved){
-            setSaved(true)
-        }
-    }, [isSaved]);
+    // useEffect(()=>{
+    //     if(isItemSaved){
+    //         setSaved(true)
+    //     }
+    // }, [isSaved]);
 
     function onStarClicked(){
         setSaved(!isSaved);

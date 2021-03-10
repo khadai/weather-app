@@ -20,7 +20,12 @@ const App = () => {
         if (savedItems.includes(search)) {
             setSaved(true)
             console.log("here")
+        } else{
+            setSaved(false)
         }
+        console.log("hereee")
+        console.log('my saved item:'+savedItems)
+        console.log('my search '+search)
     }, [savedItems, search])
 
     function onSearchChange(search) {
