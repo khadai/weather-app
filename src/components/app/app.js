@@ -1,20 +1,24 @@
 import React, {useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route} from "react-router-dom";
+import {useSelector, useDispatch} from "react-redux";
 
 import './app.css';
 import AppHeader from "../app-header";
 import SearchPanel from "../search-panel";
 import WeatherItem from "../weather-item";
 import SavedLocationsList from "../saved-locations-list";
-import StartImage from "../start-image/start-image";
-import Spinner from "../spinner";
-import ErrorIndicator from "../error-indicator";
+
 import OpenWeatherService from "../../services/openweather-service";
+import {addItem, deleteItem} from "../../store/actions";
 
 const App = () => {
+
+    const dispatch = useDispatch()
+    const weatherItems = useSelector(state => state.weatherItems);
+    console.log('wtf' + weatherItems);
+
     const openWeatherService = new OpenWeatherService();
     const [search, setSearch] = useState("");
-    const [savedItems, setItems] = useState([]);
     const [isSaved, setSaved] = useState(false);
     const [data, setData] = useState();
 
@@ -24,40 +28,12 @@ const App = () => {
         }).catch((e) => {
             console.log(e)
         })
-    },[search]);
-    //
-    // useEffect(() => {
-    //     if (savedItems.includes(search)) {
-    //         setSaved(true)
-    //         console.log("here")
-    //     } else{
-    //         setSaved(false)
-    //     }
-    //     console.log("hereee")
-    //     console.log('my saved item:'+savedItems)
-    //     console.log('my search '+search)
-    // }, [savedItems, search])
+    }, [search]);
 
     function onSearchChange(search) {
         setSearch(search)
     }
 
-    function onItemSaved(item) {
-        if (savedItems.includes(item))
-            return;
-        else
-            setItems([...savedItems, item])
-        console.log('i saved the ' + item + '!')
-    }
-
-    function onItemUnsaved(city) {
-        console.log('i unsaved the ' + city + '!')
-        const idx = savedItems.findIndex((item) => item === city)
-        const items = [...savedItems.slice(0, idx), ...savedItems.slice(idx + 1)]
-        setItems(items);
-    }
-
-    console.log(savedItems)
     return (
         <div className="weather-app">
             <Router>
@@ -70,8 +46,8 @@ const App = () => {
                         </div>
                         <WeatherItem
                             item={data}
-                            onItemSaved={(item) => onItemSaved(item)}
-                            onItemUnsaved={(item) => onItemUnsaved(item)}
+                            onItemSaved={(item) => dispatch(addItem(item))}
+                            onItemUnsaved={(item) => dispatch(deleteItem(item))}
                             isItemSaved={isSaved}
                         />
                     </React.Fragment>
@@ -79,12 +55,11 @@ const App = () => {
                 <Route
                     path="/saved" render={() => (
                     <SavedLocationsList
-                        savedItems={savedItems}
-                        onItemSaved={(item) => onItemSaved(item)}
-                        onItemUnsaved={(item) => onItemUnsaved(item)}/>
+                        savedItems={weatherItems}
+                        onItemSaved={(item) => dispatch(addItem(item))}
+                        onItemUnsaved={(item) => dispatch(deleteItem(item))}
+                    />
                 )}/>
-
-
             </Router>
         </div>
     );

@@ -1,18 +1,29 @@
 import React, {useEffect, useState} from 'react';
+import {useSelector} from "react-redux";
 import {AiFillStar as Star} from 'react-icons/ai';
 import './weather-item.css';
 import img from "../../images/img.png";
-import OpenWeatherService from "../../services/openweather-service";
 import StartImage from "../start-image";
-import ErrorIndicator from "../error-indicator";
-import Spinner from "../spinner";
 
-const WeatherItem = ({item, onItemSaved, onItemUnsaved, isItemSaved, savedItems}) => {
+const WeatherItem = ({item, onItemSaved, onItemUnsaved}) => {
+
+    const weatherItems = useSelector(state => state.weatherItems)
+
     const [isSaved, setSaved] = useState(false);
 
-    function onStarClicked(){
+    useEffect(() => {
+
+        if (item!==undefined && weatherItems.includes(item.city.toLowerCase())) {
+            console.log('wi: ' + weatherItems + ' item: ' + item.city)
+            setSaved(true)
+            console.log('here in weather item')
+        }
+        else
+            setSaved(false)
+    }, [weatherItems, item, isSaved])
+
+    function onStarClicked() {
         setSaved(!isSaved);
-        console.log('d&'+item);
         !isSaved ? onItemSaved(item.city.toLowerCase()) : onItemUnsaved(item.city.toLowerCase());
     }
 
@@ -41,7 +52,7 @@ const WeatherItem = ({item, onItemSaved, onItemUnsaved, isItemSaved, savedItems}
                     <p className="location">{city}, {country}</p>
                     <p className="coordinates">({lon}, {lat})</p>
                 </span>
-                <Star className={`star ${isSaved ? 'checked' : 'unchecked'}`} onClick={()=>onStarClicked()}/>
+                <Star className={`star ${isSaved ? 'checked' : 'unchecked'}`} onClick={() => onStarClicked()}/>
             </div>
             <div className="item-body">
                 <table>
