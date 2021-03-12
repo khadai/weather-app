@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AiFillStar as Star} from 'react-icons/ai';
 import './weather-item.css';
 import img from "../../images/img.png";
@@ -7,18 +7,16 @@ import StartImage from "../start-image";
 
 const WeatherItem = ({item, onItemSaved, onItemUnsaved}) => {
 
+    const dispatch = useDispatch()
+
     const weatherItems = useSelector(state => state.weatherItems)
 
     const [isSaved, setSaved] = useState(false);
 
     useEffect(() => {
-
-        if (item!==undefined && weatherItems.includes(item.city.toLowerCase())) {
-            console.log('wi: ' + weatherItems + ' item: ' + item.city)
+        if (item !== undefined && weatherItems.includes(item.city.toLowerCase())) {
             setSaved(true)
-            console.log('here in weather item')
-        }
-        else
+        } else
             setSaved(false)
     }, [weatherItems, item, isSaved])
 
@@ -27,9 +25,7 @@ const WeatherItem = ({item, onItemSaved, onItemUnsaved}) => {
         !isSaved ? onItemSaved(item.city.toLowerCase()) : onItemUnsaved(item.city.toLowerCase());
     }
 
-    if (!item) {
-        return <StartImage/>
-    }
+    if (!item) return <StartImage/>
 
     const {
         city,

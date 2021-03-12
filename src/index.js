@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import ReactDOM from 'react-dom';

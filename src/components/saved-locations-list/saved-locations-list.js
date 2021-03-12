@@ -17,7 +17,7 @@ const SavedLocationsList = ({savedItems, onItemSaved, onItemUnsaved}) => {
                 setData((prev) => [...prev, res])
             })
         })
-    },[]);
+    }, []);
 
     return (
         <div className="list-container">

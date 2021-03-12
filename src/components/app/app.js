@@ -15,11 +15,9 @@ const App = () => {
 
     const dispatch = useDispatch()
     const weatherItems = useSelector(state => state.weatherItems);
-    console.log('wtf' + weatherItems);
 
     const openWeatherService = new OpenWeatherService();
     const [search, setSearch] = useState("");
-    const [isSaved, setSaved] = useState(false);
     const [data, setData] = useState();
 
     useEffect(() => {
@@ -30,10 +28,6 @@ const App = () => {
         })
     }, [search]);
 
-    function onSearchChange(search) {
-        setSearch(search)
-    }
-
     return (
         <div className="weather-app">
             <Router>
@@ -42,13 +36,12 @@ const App = () => {
                     path="/" exact render={() => (
                     <React.Fragment>
                         <div className="search-content">
-                            <SearchPanel onSearchChange={onSearchChange}/>
+                            <SearchPanel onSearchChange={(search) => setSearch(search)}/>
                         </div>
                         <WeatherItem
                             item={data}
                             onItemSaved={(item) => dispatch(addItem(item))}
                             onItemUnsaved={(item) => dispatch(deleteItem(item))}
-                            isItemSaved={isSaved}
                         />
                     </React.Fragment>
                 )}/>
