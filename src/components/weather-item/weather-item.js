@@ -4,11 +4,12 @@ import {AiFillStar as Star} from 'react-icons/ai';
 import './weather-item.css';
 import img from "../../images/img.png";
 import StartImage from "../start-image";
+import ErrorIndicator from "../error-indicator";
+import {addItem, deleteItem} from "../../store/actions";
 
-const WeatherItem = ({item, onItemSaved, onItemUnsaved}) => {
+const WeatherItem = ({item, err}) => {
 
     const dispatch = useDispatch()
-
     const weatherItems = useSelector(state => state.weatherItems)
 
     const [isSaved, setSaved] = useState(false);
@@ -22,10 +23,12 @@ const WeatherItem = ({item, onItemSaved, onItemUnsaved}) => {
 
     function onStarClicked() {
         setSaved(!isSaved);
-        !isSaved ? onItemSaved(item.city.toLowerCase()) : onItemUnsaved(item.city.toLowerCase());
+        !isSaved ? dispatch(addItem(item.city.toLowerCase())) : dispatch(deleteItem(item.city.toLowerCase()));
     }
 
+
     if (!item) return <StartImage/>
+    // if (err) return <ErrorIndicator/>
 
     const {
         city,

@@ -5,7 +5,7 @@ import WeatherItem from "../weather-item";
 import OpenWeatherService from "../../services/openweather-service";
 import {useSelector} from "react-redux";
 
-const SavedLocationsList = ({savedItems, onItemSaved, onItemUnsaved}) => {
+const SavedLocationsList = () => {
     const weatherItems = useSelector(state => state.weatherItems)
 
     const openWeatherService = new OpenWeatherService();
@@ -26,8 +26,6 @@ const SavedLocationsList = ({savedItems, onItemSaved, onItemUnsaved}) => {
                     <WeatherItem
                         key={item.city}
                         item={item}
-                        onItemSaved={(item) => onItemSaved(item)}
-                        onItemUnsaved={(item) => onItemUnsaved(item)}
                     />)
             }
         </div>

@@ -1,4 +1,4 @@
-const reducer = (state = {weatherItems: []}, action) => {
+const reducer = (state = {weatherItems: [], err: false}, action) => {
     switch (action.type) {
         case 'ADD_ITEM':
             return {
@@ -16,6 +16,18 @@ const reducer = (state = {weatherItems: []}, action) => {
                     [...state.weatherItems
                         .filter(weatherItem => weatherItem !== action.payload)]
             };
+
+        case 'ADD_ERR':
+            return {
+                ...state,
+                err: true
+            }
+
+        case 'DELETE_ERR':
+            return {
+                ...state,
+                err: false
+            }
 
         default:
             return state;

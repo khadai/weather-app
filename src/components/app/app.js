@@ -13,20 +13,19 @@ import {addItem, deleteItem} from "../../store/actions";
 
 const App = () => {
 
-    const dispatch = useDispatch()
-    const weatherItems = useSelector(state => state.weatherItems);
-
     const openWeatherService = new OpenWeatherService();
     const [search, setSearch] = useState("");
     const [data, setData] = useState();
+    const [err, setErr] = useState(false);
+
 
     useEffect(() => {
         openWeatherService.getDataByCityName(search).then((res) => {
             setData(res);
-        }).catch((e) => {
-            console.log(e)
+        }).catch(() => {
+            setErr(true)
         })
-    }, [search]);
+    }, [search, err]);
 
     return (
         <div className="weather-app">
@@ -40,18 +39,13 @@ const App = () => {
                         </div>
                         <WeatherItem
                             item={data}
-                            onItemSaved={(item) => dispatch(addItem(item))}
-                            onItemUnsaved={(item) => dispatch(deleteItem(item))}
+                            err={err}
                         />
                     </React.Fragment>
                 )}/>
                 <Route
                     path="/saved" render={() => (
-                    <SavedLocationsList
-                        savedItems={weatherItems}
-                        onItemSaved={(item) => dispatch(addItem(item))}
-                        onItemUnsaved={(item) => dispatch(deleteItem(item))}
-                    />
+                    <SavedLocationsList/>
                 )}/>
             </Router>
         </div>
